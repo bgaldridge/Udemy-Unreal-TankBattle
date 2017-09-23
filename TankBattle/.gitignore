@@ -79,3 +79,6 @@ Content/StarterContent/*
 
 # Packaged Game
 WindowsNoEditor/*
+
+#Specific Large Assets
+Content/MainMenu/Assets/BT17-Firing-M1A1-tank-in-Djibouti.uasset
