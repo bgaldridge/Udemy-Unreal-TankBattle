@@ -17,5 +17,5 @@ class TANKBATTLE_API ATankPlayerController_BP : public APlayerController
 public:
 	ATank* GetControlledTank() const; //What tank is the player controlling
 	
-	
+	void BeginPlay() override;
 };
