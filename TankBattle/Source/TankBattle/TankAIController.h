@@ -14,10 +14,11 @@ class TANKBATTLE_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 	
-public:
+private:
 
 	ATank* GetAIControlledTank() const; //What tank is the AI controlling
+
 	void BeginPlay() override;
 	
-	
+	ATank* GetPlayerTank() const; //returns pointer to player tank
 };

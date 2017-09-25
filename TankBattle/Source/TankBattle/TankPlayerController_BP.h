@@ -18,4 +18,19 @@ public:
 	ATank* GetControlledTank() const; //What tank is the player controlling
 	
 	void BeginPlay() override;
+
+	virtual void Tick(float DeltaTime) override;	
+
+	void AimTowardsCrosshair(); //Moves barrel towards where player is aiming
+
+	bool GetSightRayHitLocation(FVector& OutHitLocation) const; //Find if the sights hit the landscape and if it does, give coordinates
+
+private:
+	UPROPERTY(EditAnywhere)
+	float CannonRange = 1000.f;
+
+	FVector OutHitLocation; //Out parameter for hit location
+	FVector PlayerLocation; //Out parameter for player view location
+	FRotator PlayerCameraRotation;//Out parameter for player view rotation
+
 };
