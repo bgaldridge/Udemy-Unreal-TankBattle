@@ -13,7 +13,7 @@ UCLASS()
 class TANKBATTLE_API ATankPlayerController_BP : public APlayerController
 {
 	GENERATED_BODY()
-	
+
 private:
 	ATank* GetControlledTank() const; //What tank is the player controlling
 	

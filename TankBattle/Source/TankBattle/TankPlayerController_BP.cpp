@@ -83,7 +83,4 @@ bool ATankPlayerController_BP::GetSightRayHitLocation(FHitResult &OutHit) const
 	}
 	
 	return false; //if either screen location of hit fails, return false
-
-
-	
 }
