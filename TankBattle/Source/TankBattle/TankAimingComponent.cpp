@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankBattle.h"
+#include "TankBarrel.h"
 #include "TankAimingComponent.h"
 
 
@@ -14,7 +15,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
 }
@@ -37,6 +38,17 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
+void UTankAimingComponent::MoveBarrel(FVector LaunchDirection)
+{
+	//Get current barrel coordinates
+	FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
+	FRotator LaunchRotation = LaunchDirection.Rotation();
+	FRotator DeltaRotator = LaunchRotation - BarrelRotation;
+
+	Barrel->Elevate(5.f); //TODO remove magic number
+
+}
+
 void UTankAimingComponent::AimAt(FVector AimLocation, float LaunchSpeed)
 {
 	if (!Barrel){return;}
@@ -51,15 +63,12 @@ void UTankAimingComponent::AimAt(FVector AimLocation, float LaunchSpeed)
 		BarrelHeadLocation, 
 		AimLocation, 
 		LaunchSpeed,
-		false,
-		0,
-		0,
 		ESuggestProjVelocityTraceOption::DoNotTrace))
 	{
 		FVector LaunchDirection = OutLaunchVelocity.GetSafeNormal(); //Makes unit vector in direction of launchvelcotiy
 		auto TankName = GetOwner()->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("%s Barrel is aiming at %s"),*TankName, *LaunchDirection.ToString());
+		//UE_LOG(LogTemp, Warning, TEXT("%s Barrel is aiming at %s"),*TankName, *LaunchDirection.ToString());
+		MoveBarrel(LaunchDirection);
 	}
-
-	
 }
+

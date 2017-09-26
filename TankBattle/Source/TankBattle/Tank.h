@@ -6,6 +6,8 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+class UTankBarrel; //Forward declaration
+
 UCLASS()
 class TANKBATTLE_API ATank : public APawn
 {
@@ -20,7 +22,7 @@ public:
 	//Function that can be used in blueprint to find the end of barrel location
 	//Uses TankAimingComponent
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);//given barrel from blueprint
+	void SetBarrelReference(UTankBarrel* BarrelToSet);//given barrel from blueprint
 
 protected:
 	//
