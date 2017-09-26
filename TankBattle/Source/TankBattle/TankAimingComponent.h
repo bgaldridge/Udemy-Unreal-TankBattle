@@ -16,7 +16,7 @@ public:
 	UTankAimingComponent();
 
 	//Gives aim location
-	void AimAt(FVector AimLocation);
+	void AimAt(FVector AimLocation, float LaunchSpeed);
 
 	//
 	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
@@ -31,5 +31,4 @@ private:
 
 	//The barrel, which we will get from blueprint
 	UStaticMeshComponent* Barrel = nullptr;
-	
 };
