@@ -43,32 +43,47 @@ void ATankPlayerController_BP::AimTowardsCrosshair()
 		return;
 	}
 	
-	UE_LOG(LogTemp, Warning, TEXT("Hit: %s"), *OutHitLocation.ToString());
+	FHitResult OutHit;; //Out parameter for hit location
 
 	//Get world location of crosshair through line trace and move cannon
-	GetSightRayHitLocation(OutHitLocation);
+	if (GetSightRayHitLocation(OutHit))
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Hit Result = %s"), *OutHit.Location.ToString())
+		GetControlledTank()->AimAt(OutHit.Location);//Tank aims at specified location
+	}
+	
 }
 
 //Find if the sights hit the landscape and if it does, give coordinates
-bool ATankPlayerController_BP::GetSightRayHitLocation(FVector& OutHitLocation) const
+bool ATankPlayerController_BP::GetSightRayHitLocation(FHitResult &OutHit) const
 {
-	//Find the player controlled pawn (or tank in this case)
-	//ATank *PlayerTank = GetControlledTank();
+	//Find the crosshair position
+	int32 OutViewportSizeX, OutViewportSizeY;
+	GetViewportSize(OutViewportSizeX, OutViewportSizeY); //Get viewport size
+	FVector2D ScreenLocation = FVector2D(OutViewportSizeX*CrossHairXLocation, OutViewportSizeY*CrossHairYLocation);
 
-	//Get player location and viewpoint
-	//PlayerLocation = PlayerTank->GetActorLocation();
-	//PlayerTank->CalcCamera(GetWorld()->GetTimeSeconds(), FMinimalViewInfo());
+	//"de-project" the screen position of the crosshair to a world direction
+	FVector OutCameraWorldLocation, OutCameraWorldDirection;
+	if (DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, OutCameraWorldLocation, OutCameraWorldDirection))//returns unit vector of direction the camera is facing
+	{
+		//Line-trace along look direction and see what we hit up to max range		
+		if (GetWorld()->LineTraceSingleByChannel(OutHit,
+			OutCameraWorldLocation,
+			OutCameraWorldLocation + OutCameraWorldDirection*CannonRange,
+			ECC_Visibility,
+			FCollisionQueryParams(FName(TEXT("")), false, GetOwner()),
+			FCollisionResponseParams()))
+		{
+			return true; //if hit result is successfull
+		}
+		else
+		{
+			OutHit.Init(); //provide initialized to zero aiming
+		}
+	}
+	
+	return false; //if either screen location of hit fails, return false
 
-	//Find the location of the player view at the cannon range
-	//FVector LineTraceEnd = PlayerLocation + PlayerCameraRotation.Vector()*CannonRange;
 
-	//Do line trace and see if anything is hit
-	//auto LineTraceParams = FCollisionQueryParams();
-	//bool hit = PlayerTank->ActorLineTraceSingle(OutHitLocation, PlayerLocation, LineTraceEnd, ECC_WorldStatic, LineTraceParams);
-
-	//Return hit status
-	//return hit;
-	OutHitLocation = FVector(1.0);
-
-	return false;
+	
 }

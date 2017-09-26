@@ -18,7 +18,9 @@ private:
 
 	ATank* GetAIControlledTank() const; //What tank is the AI controlling
 
-	void BeginPlay() override;
+	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaTime) override;
 	
 	ATank* GetPlayerTank() const; //returns pointer to player tank
 };

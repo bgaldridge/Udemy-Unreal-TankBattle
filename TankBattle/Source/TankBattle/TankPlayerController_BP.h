@@ -14,7 +14,7 @@ class TANKBATTLE_API ATankPlayerController_BP : public APlayerController
 {
 	GENERATED_BODY()
 	
-public:
+private:
 	ATank* GetControlledTank() const; //What tank is the player controlling
 	
 	void BeginPlay() override;
@@ -23,14 +23,17 @@ public:
 
 	void AimTowardsCrosshair(); //Moves barrel towards where player is aiming
 
-	bool GetSightRayHitLocation(FVector& OutHitLocation) const; //Find if the sights hit the landscape and if it does, give coordinates
+	bool GetSightRayHitLocation(FHitResult& OutHit) const; //Find if the sights hit the landscape and if it does, give coordinates
 
-private:
 	UPROPERTY(EditAnywhere)
-	float CannonRange = 1000.f;
+		int CannonRange = 1000000;
 
-	FVector OutHitLocation; //Out parameter for hit location
-	FVector PlayerLocation; //Out parameter for player view location
-	FRotator PlayerCameraRotation;//Out parameter for player view rotation
+	UPROPERTY(EditAnywhere)
+		float CrossHairXLocation = 0.5f;
+
+	UPROPERTY(EditAnywhere)
+		float CrossHairYLocation = 0.33333f;
+
+
 
 };
