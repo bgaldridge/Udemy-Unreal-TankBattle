@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankBattle.h"
+#include "Tank.h"
 #include "TankPlayerController_BP.h"
 
 void ATankPlayerController_BP::BeginPlay()
@@ -15,7 +16,7 @@ void ATankPlayerController_BP::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Your tank is %s"), *PlayerTank->GetName());
+		//UE_LOG(LogTemp, Warning, TEXT("Your tank is %s"), *PlayerTank->GetName());
 	}
 	
 }
@@ -40,6 +41,8 @@ void ATankPlayerController_BP::AimTowardsCrosshair()
 {
 	if (!GetControlledTank())
 	{
+		ATank *PlayerTank = GetControlledTank();
+		UE_LOG(LogTemp, Error, TEXT("%s is not found in AimTowardsCrosshair"), *PlayerTank->GetName());
 		return;
 	}
 	

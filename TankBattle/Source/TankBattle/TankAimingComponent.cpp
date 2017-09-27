@@ -51,8 +51,12 @@ void UTankAimingComponent::MoveBarrel(FVector LaunchDirection)
 
 void UTankAimingComponent::AimAt(FVector AimLocation, float LaunchSpeed)
 {
-	if (!Barrel){return;}
 
+	if (!Barrel)
+	{		
+		return;
+	}
+	
 	FVector OutLaunchVelocity;
 	FVector BarrelHeadLocation = Barrel->GetSocketLocation(FName("ProjectileStart"));
 
@@ -63,12 +67,19 @@ void UTankAimingComponent::AimAt(FVector AimLocation, float LaunchSpeed)
 		BarrelHeadLocation, 
 		AimLocation, 
 		LaunchSpeed,
-		ESuggestProjVelocityTraceOption::DoNotTrace))
+		false,
+		0,
+		0,
+		ESuggestProjVelocityTraceOption::DoNotTrace)) //last line must be present to prevent bug
 	{
 		FVector LaunchDirection = OutLaunchVelocity.GetSafeNormal(); //Makes unit vector in direction of launchvelcotiy
 		auto TankName = GetOwner()->GetName();
 		//UE_LOG(LogTemp, Warning, TEXT("%s Barrel is aiming at %s"),*TankName, *LaunchDirection.ToString());
 		MoveBarrel(LaunchDirection);
+	}
+	else
+	{
+
 	}
 }
 
