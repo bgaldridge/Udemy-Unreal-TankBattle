@@ -9,6 +9,7 @@
 //Forward declarations
 class UTankAimingComponent; 
 class UTankBarrel;
+class UTankTurret;
 
 UCLASS()
 class TANKBATTLE_API ATank : public APawn
@@ -21,10 +22,13 @@ public:
 
 	void AimAt(FVector AimLocation);
 
-	//Function that can be used in blueprint to find the end of barrel location
+	//Function that can be used in blueprint to find the end of barrel adn turret location
 	//Uses TankAimingComponent
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel* BarrelToSet);//given barrel from blueprint
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetTurretReference(UTankTurret* TurretToSet);//given turret from blueprint
 
 protected:
 	//

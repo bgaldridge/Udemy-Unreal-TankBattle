@@ -7,6 +7,7 @@
 
 //Forward declaration
 class UTankBarrel;
+class UTankTurret;
 
 //Holds barrel aiming method
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -21,9 +22,13 @@ public:
 	//Gives aim location
 	void AimAt(FVector AimLocation, float LaunchSpeed);
 
+	//Set the barrel component and move it based on AimAt
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
-
 	void MoveBarrel(FVector LaunchDirection);
+
+	//Set the turret component and move it based on AimAt
+	void SetTurretReference(UTankTurret* TurretToSet);
+	void MoveTurret(FVector LaunchDirection);
 
 protected:
 	// Called when the game starts
@@ -33,6 +38,8 @@ private:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	//The barrel, which we will get from blueprint
+	//The barrel and turret, which we will get from blueprint
 	UTankBarrel* Barrel = nullptr;
+	UTankTurret* Turret = nullptr;
+
 };

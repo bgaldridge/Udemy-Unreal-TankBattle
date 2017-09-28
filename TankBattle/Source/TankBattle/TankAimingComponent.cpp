@@ -2,6 +2,7 @@
 
 #include "TankBattle.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "TankAimingComponent.h"
 
 
@@ -18,6 +19,11 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+{
+	Turret = TurretToSet;
 }
 
 // Called when the game starts
@@ -49,16 +55,27 @@ void UTankAimingComponent::MoveBarrel(FVector LaunchDirection)
 
 }
 
+void UTankAimingComponent::MoveTurret(FVector LaunchDirection)
+{
+	//Get current barrel coordinates
+	FRotator TurretRotation = Turret->GetForwardVector().Rotation();
+	FRotator LaunchRotation = LaunchDirection.Rotation();
+	FRotator DeltaRotator = LaunchRotation - TurretRotation;
+
+	Turret->Rotate(DeltaRotator.Yaw);
+
+}
+
 void UTankAimingComponent::AimAt(FVector AimLocation, float LaunchSpeed)
 {
 
-	if (!Barrel)
+	if ((!Barrel)||(!Turret))
 	{		
 		return;
 	}
 	
 	FVector OutLaunchVelocity;
-	FVector BarrelHeadLocation = Barrel->GetSocketLocation(FName("ProjectileStart"));
+	FVector BarrelHeadLocation = Barrel->GetSocketLocation(FName("ProjectileStart")); //Start location of projectile
 
 	//Calculate the OutLaunchVelocity
 
@@ -74,8 +91,10 @@ void UTankAimingComponent::AimAt(FVector AimLocation, float LaunchSpeed)
 	{
 		FVector LaunchDirection = OutLaunchVelocity.GetSafeNormal(); //Makes unit vector in direction of launchvelcotiy
 		auto TankName = GetOwner()->GetName();
-		//UE_LOG(LogTemp, Warning, TEXT("%s Barrel is aiming at %s"),*TankName, *LaunchDirection.ToString());
+		
+		//Move the barrel and turret based on the calculated launch direction
 		MoveBarrel(LaunchDirection);
+		MoveTurret(LaunchDirection);
 	}
 	else
 	{

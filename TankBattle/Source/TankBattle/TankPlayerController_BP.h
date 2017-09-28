@@ -38,6 +38,4 @@ private:
 	UPROPERTY(EditAnywhere)
 		float CrossHairYLocation = 0.33333f;
 
-
-
 };
