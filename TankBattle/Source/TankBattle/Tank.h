@@ -25,10 +25,13 @@ public:
 	//Function that can be used in blueprint to find the end of barrel adn turret location
 	//Uses TankAimingComponent
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);//given barrel from blueprint
+		void SetBarrelReference(UTankBarrel* BarrelToSet);//given barrel from blueprint
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTurretReference(UTankTurret* TurretToSet);//given turret from blueprint
+		void SetTurretReference(UTankTurret* TurretToSet);//given turret from blueprint
+
+	UFUNCTION(BlueprintCallable, Category = Firing)
+		void Fire(); //fire a projectile
 
 protected:
 	//
@@ -43,5 +46,5 @@ private:
 	virtual void BeginPlay() override;
 	
 	UPROPERTY(EditAnywhere, Category = Firing)
-		float LaunchSpeed = 3500;
+		float LaunchSpeed = 5000;
 };
