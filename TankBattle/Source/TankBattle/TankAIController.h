@@ -21,11 +21,11 @@ class TANKBATTLE_API ATankAIController : public AAIController
 	
 private:
 
-	ATank* GetAIControlledTank() const; //What tank is the AI controlling
-
+	ATank* AITank;
+	ATank* PlayerTank;
+	
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime) override;
 	
-	ATank* GetPlayerTank() const; //returns pointer to player tank
 };

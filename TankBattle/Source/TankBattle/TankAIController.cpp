@@ -9,48 +9,30 @@ void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//Check for controlled tank and log out
-	ATank *AITank = GetAIControlledTank();
+	//Find AITank (self) and Player Tank
+	AITank = Cast<ATank>(GetPawn());
+	PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	
+	//Log error if no AITank or PlayerTank
 	if (!AITank)
 	{
-		UE_LOG(LogTemp, Error, TEXT("AI controlled tank not found!!"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AI controlled tank is %s"), *AITank->GetName());
+		UE_LOG(LogTemp, Error, TEXT("AI controlled tank not found on TankAIController!!"));
 	}
 
-	//What is the player controlled tank
-	ATank *PlayerTank = GetPlayerTank();
 	if (!PlayerTank)
 	{
-		UE_LOG(LogTemp, Error, TEXT("Player tank controlled tank not found!!"));
+		UE_LOG(LogTemp, Error, TEXT("Player controlled tank not found from TankAIController!!"));
 	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Player controlled tank is %s"), *PlayerTank->GetName());
-	}
-
 }
 
 //Called every frame
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (GetPlayerTank())
+	if (PlayerTank)
 	{
-		GetAIControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+		//Aim at player and fire
+		AITank->AimAt(PlayerTank->GetActorLocation());
+		AITank->Fire();
 	}
-}
-
-//Find what tank the AI is controlling
-ATank* ATankAIController::GetAIControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
-//Find what the player tank is
-ATank * ATankAIController::GetPlayerTank() const
-{
-	return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 }

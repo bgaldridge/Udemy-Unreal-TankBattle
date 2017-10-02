@@ -18,12 +18,12 @@ public:
 	void Elevate(float RelativeSpeed);
 	
 private:
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 		float MaxDegreesPerSecond = 7;
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 		float MinBarrelAngleDegrees = -10;
-	
-	UPROPERTY(EditAnywhere, Category = Setup)
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 		float MaxBarrelAngleDegrees = 20;
 };
