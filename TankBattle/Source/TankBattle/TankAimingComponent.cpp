@@ -62,15 +62,31 @@ void UTankAimingComponent::MoveTurret(FVector LaunchDirection)
 	//Get current barrel coordinates
 	FRotator TurretRotation = Turret->GetForwardVector().Rotation();
 	FRotator LaunchRotation = LaunchDirection.Rotation();
-	FRotator DeltaRotator = LaunchRotation - TurretRotation;
+	float DeltaRotator;
+	//Pick DeltaRotator so that rotation is always in closest and correct direction
+	if ((TurretRotation.Yaw < 0) && (LaunchRotation.Yaw > 0)) //TODO Fix so that it works in all directions
+	{
+		DeltaRotator = TurretRotation.Yaw - LaunchRotation.Yaw;
+	}
+	else
+	{
+		DeltaRotator = LaunchRotation.Yaw - TurretRotation.Yaw;
+	}
+	 
+	if (GetOwner()->GetName() == GetWorld()->GetFirstPlayerController()->GetPawn()->GetName())
+	{
+		float LaunchRotationReport = LaunchRotation.Yaw;
+		float TurretRotationReport = TurretRotation.Yaw;
 
-	Turret->Rotate(DeltaRotator.Yaw);
+		UE_LOG(LogTemp, Warning, TEXT("Delta rotator = %f-%f=%f"), LaunchRotationReport, TurretRotationReport, DeltaRotator)
+	}
+	Turret->Rotate(DeltaRotator);
 
 }
 
 void UTankAimingComponent::AimAt(FVector AimLocation, float LaunchSpeed)
 {
-
+	
 	if ((!Barrel)||(!Turret))
 	{		
 		return;
@@ -80,7 +96,7 @@ void UTankAimingComponent::AimAt(FVector AimLocation, float LaunchSpeed)
 	FVector BarrelHeadLocation = Barrel->GetSocketLocation(FName("ProjectileStart")); //Start location of projectile
 
 	//Calculate the OutLaunchVelocity
-
+	
 	if (UGameplayStatics::SuggestProjectileVelocity(this, 
 		OutLaunchVelocity, 
 		BarrelHeadLocation, 
@@ -92,7 +108,7 @@ void UTankAimingComponent::AimAt(FVector AimLocation, float LaunchSpeed)
 		ESuggestProjVelocityTraceOption::DoNotTrace)) //last line must be present to prevent bug
 	{
 		FVector LaunchDirection = OutLaunchVelocity.GetSafeNormal(); //Makes unit vector in direction of launchvelcotiy
-		auto TankName = GetOwner()->GetName();
+		//auto TankName = GetOwner()->GetName();
 		
 		//Move the barrel and turret based on the calculated launch direction
 		MoveBarrel(LaunchDirection);

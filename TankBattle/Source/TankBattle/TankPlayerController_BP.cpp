@@ -16,7 +16,7 @@ void ATankPlayerController_BP::BeginPlay()
 	}
 	else
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Your tank is %s"), *PlayerTank->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Your tank is %s"), *PlayerTank->GetName());
 	}
 	
 }
@@ -60,6 +60,7 @@ void ATankPlayerController_BP::AimTowardsCrosshair()
 //Find if the sights hit the landscape and if it does, give coordinates
 bool ATankPlayerController_BP::GetSightRayHitLocation(FHitResult &OutHit) const
 {
+	
 	//Find the crosshair position
 	int32 OutViewportSizeX, OutViewportSizeY;
 	GetViewportSize(OutViewportSizeX, OutViewportSizeY); //Get viewport size
