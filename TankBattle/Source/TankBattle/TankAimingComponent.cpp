@@ -73,13 +73,13 @@ void UTankAimingComponent::MoveTurret(FVector LaunchDirection)
 		DeltaRotator = LaunchRotation.Yaw - TurretRotation.Yaw;
 	}
 	 
-	if (GetOwner()->GetName() == GetWorld()->GetFirstPlayerController()->GetPawn()->GetName())
-	{
-		float LaunchRotationReport = LaunchRotation.Yaw;
-		float TurretRotationReport = TurretRotation.Yaw;
+	//if (GetOwner()->GetName() == GetWorld()->GetFirstPlayerController()->GetPawn()->GetName())
+	//{
+	//	float LaunchRotationReport = LaunchRotation.Yaw;
+	//	float TurretRotationReport = TurretRotation.Yaw;
 
-		UE_LOG(LogTemp, Warning, TEXT("Delta rotator = %f-%f=%f"), LaunchRotationReport, TurretRotationReport, DeltaRotator)
-	}
+	//	UE_LOG(LogTemp, Warning, TEXT("Delta rotator = %f-%f=%f"), LaunchRotationReport, TurretRotationReport, DeltaRotator)
+	//}
 	Turret->Rotate(DeltaRotator);
 
 }

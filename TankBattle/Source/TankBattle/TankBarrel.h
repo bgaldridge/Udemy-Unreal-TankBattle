@@ -6,7 +6,7 @@
 #include "TankBarrel.generated.h"
 
 /**
- * 
+ * StaticMesh used to control elevation barrel is aiming (pitch)
  */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class TANKBATTLE_API UTankBarrel : public UStaticMeshComponent

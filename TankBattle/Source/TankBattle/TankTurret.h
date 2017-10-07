@@ -6,7 +6,7 @@
 #include "TankTurret.generated.h"
 
 /**
- * 
+ * StaticMesh used to control direction barrel is aiming (yaw)
  */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class TANKBATTLE_API UTankTurret : public UStaticMeshComponent
