@@ -12,12 +12,18 @@ void UTankMovementComponent::Initialize(UTankTrack *LeftTrackToSet, UTankTrack *
 
 }
 
+void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
+{
+	//No super, replacing functionality
+	UE_LOG(LogTemp, Warning, TEXT("Tank %s with MoveVelocity = %s"), *GetOwner()->GetName(), *MoveVelocity.ToString())
+}
+
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
 	if (!LeftTrack || !RightTrack) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
-
+	
 	//TODO place max speed
 }
 

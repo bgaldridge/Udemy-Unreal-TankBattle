@@ -6,7 +6,7 @@
 void UTankTrack::SetThrottle(float RelativeThrottle)
 {
 	auto Name = GetOwner()->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s RelativeThrottle speed = %f"), *Name, RelativeThrottle)
+	
 	
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	float MaxTrackDrivingForce = MaxAcceleration * TankRoot->GetMass();
