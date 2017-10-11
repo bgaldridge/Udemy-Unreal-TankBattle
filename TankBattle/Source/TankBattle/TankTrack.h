@@ -19,10 +19,4 @@ public:
 	//-1 is max reverse move and +1 is forward max speed
 	//void Move(float RelativeSpeed);
 
-private:
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
-	float MaxAcceleration = 750; // m/s^2
-
-	
-
 };

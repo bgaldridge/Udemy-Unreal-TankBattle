@@ -35,6 +35,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Firing)
 		void Fire(); //fire a projectile
 
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+		float MaxVelocity = 700; // cm/s
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+		float MaxAcceleration = 1500; // cm/s^2
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+		float MaxAngularVelocity = 35; // deg/s
+
 protected:
 	//default components on Tank
 	UTankAimingComponent* TankAimingComponent = nullptr;
