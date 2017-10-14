@@ -9,7 +9,7 @@
 
 //Forward delcations
 class UTankAimingComponent;
-class UTank;
+class ATank;
 
 /**
  * 
@@ -21,8 +21,8 @@ class TANKBATTLE_API ATankAIController : public AAIController
 	
 private:
 
-	ATank* AITank;
-	ATank* PlayerTank;
+	ATank *AITank;
+	ATank *PlayerTank;
 	
 	virtual void BeginPlay() override;
 
