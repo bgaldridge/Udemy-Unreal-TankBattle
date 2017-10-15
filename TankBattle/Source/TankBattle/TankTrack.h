@@ -14,7 +14,7 @@ class TANKBATTLE_API UTankTrack : public UStaticMeshComponent
 	GENERATED_BODY()
 	
 public:
-	UFUNCTION(BlueprintCallable, Category = Input)
+	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetThrottle(float RelativeThrottle);
 	//-1 is max reverse move and +1 is forward max speed
 	//void Move(float RelativeSpeed);

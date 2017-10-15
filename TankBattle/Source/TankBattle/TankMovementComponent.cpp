@@ -23,12 +23,10 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	FVector CrossProductBetween = FVector::CrossProduct(TankForwardDirection, AIForwardIntention);
 
 	IntendMoveForward(DotProductBetween);
-	//UE_LOG(LogTemp, Warning, TEXT("Tank %s with cross product Z value = %f"), *GetOwner()->GetName(), CrossProductBetween.Z)
 	IntendRotate(CrossProductBetween.Z);
 
 	//TODO fix friction issue(s)
 
-	//UE_LOG(LogTemp, Warning, TEXT("Tank %s with MoveVelocity = %s"), *GetOwner()->GetName(), *MoveVelocity.GetSafeNormal().ToString())
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
