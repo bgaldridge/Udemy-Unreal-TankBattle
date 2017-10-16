@@ -12,29 +12,19 @@ void ATankAIController::BeginPlay()
 	//Find AITank (self) and Player Tank
 	AITank = Cast<ATank>(GetPawn());
 	PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	
-	//Log error if no AITank or PlayerTank
-	if (!AITank)
-	{
-		UE_LOG(LogTemp, Error, TEXT("AI controlled tank not found on TankAIController!!"));
-	}
-
-	if (!PlayerTank)
-	{
-		UE_LOG(LogTemp, Error, TEXT("Player controlled tank not found from TankAIController!!"));
-	}
 }
 
 //Called every frame
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (PlayerTank)
+	if (ensure(PlayerTank))
 	{
 		//Move towards the player
 		MoveToActor(PlayerTank, AIBufferRadius);
 		
 		//Aim at player and fire
+		if (!ensure(AITank)) { return; }
 		AITank->AimAt(PlayerTank->GetActorLocation());
 		//AITank->Fire();
 	}

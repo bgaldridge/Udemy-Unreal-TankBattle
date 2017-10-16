@@ -10,14 +10,11 @@ void ATankPlayerController_BP::BeginPlay()
 	Super::BeginPlay();
 
 	UTankAimingComponent *AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
-	if (AimingComponent)
+	if (ensure(AimingComponent))
 	{
 		FoundAimingComponent(AimingComponent);
 	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Player controller can't find AimingComponent at begin play!!"))
-	}
+	
 }
 
 void ATankPlayerController_BP::Tick(float DeltaTime)
@@ -37,12 +34,12 @@ ATank* ATankPlayerController_BP::GetControlledTank() const
 //Move turret/cannon towards point player is aiming at
 void ATankPlayerController_BP::AimTowardsCrosshair()
 {
-	if (!GetControlledTank()){return;}
+	if (!ensure(GetControlledTank())) {return;}
 	
 	FHitResult OutHit;; //Out parameter for hit location
 
 	//Get world location of crosshair through line trace and move cannon
-	if (GetSightRayHitLocation(OutHit))
+	if (ensure(GetSightRayHitLocation(OutHit)))
 	{
 		GetControlledTank()->AimAt(OutHit.Location);//Tank aims at specified location
 	}
@@ -60,15 +57,19 @@ bool ATankPlayerController_BP::GetSightRayHitLocation(FHitResult &OutHit) const
 
 	//"de-project" the screen position of the crosshair to a world direction
 	FVector OutCameraWorldLocation, OutCameraWorldDirection;
-	if (DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, OutCameraWorldLocation, OutCameraWorldDirection))//returns unit vector of direction the camera is facing
+	if (ensure(DeprojectScreenPositionToWorld(
+		ScreenLocation.X, 
+		ScreenLocation.Y, 
+		OutCameraWorldLocation, 
+		OutCameraWorldDirection)))//returns unit vector of direction the camera is facing
 	{
 		//Line-trace along look direction and see what we hit up to max range		
-		if (GetWorld()->LineTraceSingleByChannel(OutHit,
+		if (ensure(GetWorld()->LineTraceSingleByChannel(OutHit,
 			OutCameraWorldLocation,
 			OutCameraWorldLocation + OutCameraWorldDirection*CannonRange,
 			ECC_Visibility,
 			FCollisionQueryParams(FName(TEXT("")), false, GetOwner()),
-			FCollisionResponseParams()))
+			FCollisionResponseParams())))
 		{
 			return true; //if hit result is successfull
 		}

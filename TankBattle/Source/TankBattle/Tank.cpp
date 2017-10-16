@@ -13,19 +13,18 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-	UE_LOG(LogTemp, Warning, TEXT("CAT: Constructor called in Tank, %s"), *GetName())
 }
 
 void ATank::AimAt(FVector AimLocation)
 {
-	if (!TankAimingComponent) { return; }
+	if (!ensure(TankAimingComponent)) { return; }
 	TankAimingComponent->AimAt(AimLocation, LaunchSpeed);
 }
 
 //initialize tank barrel and turret
 void ATank::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
-	if (!TankAimingComponent) { return; }
+	if (!ensure(TankAimingComponent)) { return; }
 	TankAimingComponent->Initialize(BarrelToSet, TurretToSet);
 }
 
@@ -34,7 +33,7 @@ void ATank::Fire()
 {
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 
-	if (Barrel && isReloaded)
+	if (ensure(Barrel) && isReloaded)
 	{
 		//spawn projectile actor
 		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
@@ -51,7 +50,4 @@ void ATank::Fire()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-
-	UE_LOG(LogTemp, Warning, TEXT("CAT: BeginPlay called in Tank. %s"), *GetName())
-
 }

@@ -22,6 +22,7 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	float DotProductBetween = FVector::DotProduct(AIForwardIntention, TankForwardDirection);
 	FVector CrossProductBetween = FVector::CrossProduct(TankForwardDirection, AIForwardIntention);
 
+	//ptr protection in functions
 	IntendMoveForward(DotProductBetween);
 	IntendRotate(CrossProductBetween.Z);
 
@@ -31,10 +32,11 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 	
 	//If current velocity is greater than max, do not add more force
 	if ((Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent())->GetComponentVelocity().Size()) > Cast<ATank>(GetOwner())->MaxVelocity){return;}
+	
 	//else continue acceleration
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
@@ -42,7 +44,7 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 
 void UTankMovementComponent::IntendRotate(float Throw)
 {
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 
 	//If current angular velocity is greater than max, do not acelerate rotation
 	if ((Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent())->GetPhysicsAngularVelocity().Size()) > Cast<ATank>(GetOwner())->MaxAngularVelocity) { return; }
