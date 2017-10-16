@@ -13,6 +13,8 @@ UTankAimingComponent::UTankAimingComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
 
+
+	//UE_LOG(LogTemp, Warning, TEXT("CAT: TankAimingComponent Constructor on %s"), *GetOwner()->GetName())
 	// ...
 }
 
@@ -21,16 +23,6 @@ void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* Tur
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
 }
-
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
 
 // Called every frame
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -80,7 +72,6 @@ void UTankAimingComponent::MoveTurret(FVector LaunchDirection)
 
 void UTankAimingComponent::AimAt(FVector AimLocation, float LaunchSpeed)
 {
-	
 	if ((!Barrel)||(!Turret))
 	{		
 		return;
@@ -114,3 +105,7 @@ void UTankAimingComponent::AimAt(FVector AimLocation, float LaunchSpeed)
 	}
 }
 
+void UTankAimingComponent::BeginPlay()
+{
+	Super::BeginPlay();
+}

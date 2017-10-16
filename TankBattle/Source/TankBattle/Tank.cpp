@@ -13,17 +13,19 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
+	UE_LOG(LogTemp, Warning, TEXT("CAT: Constructor called in Tank, %s"), *GetName())
 }
 
 void ATank::AimAt(FVector AimLocation)
 {
+	if (!TankAimingComponent) { return; }
 	TankAimingComponent->AimAt(AimLocation, LaunchSpeed);
 }
 
 //initialize tank barrel and turret
 void ATank::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
+	if (!TankAimingComponent) { return; }
 	TankAimingComponent->Initialize(BarrelToSet, TurretToSet);
 }
 
@@ -43,4 +45,13 @@ void ATank::Fire()
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 	}
+}
+
+// Called when the game starts
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+
+	UE_LOG(LogTemp, Warning, TEXT("CAT: BeginPlay called in Tank. %s"), *GetName())
+
 }

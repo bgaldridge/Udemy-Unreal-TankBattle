@@ -37,12 +37,12 @@ public:
 	void MoveTurret(FVector LaunchDirection);
 
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
 	//Firing status enum
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-		EFiringStatus FiringStatus = EFiringStatus::Reloading;
+		EFiringStatus FiringStatus = EFiringStatus::Aiming;
+
+	// Called when the game starts
+	virtual void BeginPlay() override;
 
 private:	
 	// Sets default values for this component's properties

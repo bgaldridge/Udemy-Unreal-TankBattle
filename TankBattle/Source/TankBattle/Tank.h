@@ -27,8 +27,7 @@ public:
 	//Uses TankAimingComponent
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
-
-
+	
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 		void Fire(); //fire a projectile
 
@@ -48,6 +47,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 		UTankAimingComponent* TankAimingComponent = nullptr;
+
+	// Called when the game starts
+	virtual void BeginPlay() override;
 
 private:	
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
