@@ -3,8 +3,6 @@
 #include "TankBattle.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
-#include "TankAimingComponent.h"
-#include "TankMovementComponent.h"
 #include "Tank.h"
 
 
@@ -15,19 +13,12 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
-void ATank::AimAt(FVector AimLocation)
+// Called when the game starts
+void ATank::BeginPlay()
 {
-	if (!ensure(TankAimingComponent)) { return; }
-	TankAimingComponent->AimAt(AimLocation, LaunchSpeed);
-}
+	Super::BeginPlay();
 
-//initialize tank barrel and turret
-void ATank::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
-{
-	if (!ensure(TankAimingComponent)) { return; }
-	TankAimingComponent->Initialize(BarrelToSet, TurretToSet);
 }
-
 
 void ATank::Fire()
 {
@@ -46,8 +37,3 @@ void ATank::Fire()
 	}
 }
 
-// Called when the game starts
-void ATank::BeginPlay()
-{
-	Super::BeginPlay();
-}

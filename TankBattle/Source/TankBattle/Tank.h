@@ -6,8 +6,6 @@
 #include "Tank.generated.h"
 
 //Forward declarations
-class UTankAimingComponent; 
-class UTankMovementComponent;
 class UTankBarrel;
 class UTankTurret;
 class AProjectile;
@@ -21,13 +19,7 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
-	void AimAt(FVector AimLocation);
-
-	//Function that can be used in blueprint to find the end of barrel adn turret location
-	//Uses TankAimingComponent
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-		void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
-	
+	//Function that can be used in blueprint to find the end of barrel adn turret location	
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 		void Fire(); //fire a projectile
 
@@ -41,18 +33,12 @@ public:
 		float MaxAngularVelocity = 35; // deg/s
 
 protected:
-	//reference to components on tank
-	UPROPERTY(BlueprintReadOnly)
-		UTankMovementComponent* TankMovementComponent = nullptr;
-
-	UPROPERTY(BlueprintReadOnly)
-		UTankAimingComponent* TankAimingComponent = nullptr;
-
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 private:	
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	//TODO move once refactor to fire is done
+//	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float LaunchSpeed = 5000;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")

@@ -14,6 +14,11 @@ UTankAimingComponent::UTankAimingComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
+void UTankAimingComponent::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
 void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
 	Barrel = BarrelToSet;
@@ -60,7 +65,7 @@ void UTankAimingComponent::MoveTurret(FVector LaunchDirection)
 
 }
 
-void UTankAimingComponent::AimAt(FVector AimLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector AimLocation)
 {
 	if (!ensure(Barrel && Turret)) { return; }
 	
@@ -85,9 +90,4 @@ void UTankAimingComponent::AimAt(FVector AimLocation, float LaunchSpeed)
 		MoveBarrel(LaunchDirection);
 		MoveTurret(LaunchDirection);
 	}
-}
-
-void UTankAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
 }

@@ -10,7 +10,6 @@
  */
 
 //Forward declarations
-class ATank;
 class UTankAimingComponent;
 
 UCLASS()
@@ -19,9 +18,6 @@ class TANKBATTLE_API ATankPlayerController_BP : public APlayerController
 	GENERATED_BODY()
 
 protected:
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-		ATank* GetControlledTank() const;
-
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 		void FoundAimingComponent(UTankAimingComponent *AimingComponentRef);
 
@@ -44,4 +40,5 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float CrossHairYLocation = 0.33333f;
 
+	UTankAimingComponent *AimingComponent;
 };

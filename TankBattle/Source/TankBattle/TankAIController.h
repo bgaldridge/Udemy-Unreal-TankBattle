@@ -2,14 +2,12 @@
 
 #pragma once
 
-//#include "TankAimingComponent.h"
-//#include "Tank.h"
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
 //Forward delcations
 class UTankAimingComponent;
-class ATank;
+
 
 /**
  * 
@@ -20,10 +18,9 @@ class TANKBATTLE_API ATankAIController : public AAIController
 	GENERATED_BODY()
 	
 private:
+	APawn *ControlledTank;
+	APawn *PlayerTank;
 
-	ATank *AITank;
-	ATank *PlayerTank;
-	
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime) override;

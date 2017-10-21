@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankBattle.h"
-#include "Tank.h"
 #include "TankAimingComponent.h"
 #include "TankPlayerController_BP.h"
 
@@ -9,7 +8,8 @@ void ATankPlayerController_BP::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UTankAimingComponent *AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+
 	if (ensure(AimingComponent))
 	{
 		FoundAimingComponent(AimingComponent);
@@ -25,23 +25,18 @@ void ATankPlayerController_BP::Tick(float DeltaTime)
 
 }
 
-//Find what tank the player (human or AI) is controlling
-ATank* ATankPlayerController_BP::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
 //Move turret/cannon towards point player is aiming at
 void ATankPlayerController_BP::AimTowardsCrosshair()
 {
-	if (!ensure(GetControlledTank())) {return;}
+	AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(AimingComponent)) { return; }
 	
 	FHitResult OutHit;; //Out parameter for hit location
 
 	//Get world location of crosshair through line trace and move cannon
 	if (ensure(GetSightRayHitLocation(OutHit)))
 	{
-		GetControlledTank()->AimAt(OutHit.Location);//Tank aims at specified location
+		AimingComponent->AimAt(OutHit.Location);//Tank aims at specified location
 	}
 	
 }

@@ -4,7 +4,7 @@
 #include "TankTrack.h"
 #include "Tank.h"
 #include "TankMovementComponent.h"
-
+//Has input from blueprint
 void UTankMovementComponent::Initialize(UTankTrack *LeftTrackToSet, UTankTrack *RightTrackToSet)
 {
 	

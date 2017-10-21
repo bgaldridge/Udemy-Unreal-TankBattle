@@ -26,7 +26,7 @@ class TANKBATTLE_API UTankAimingComponent : public UActorComponent
 
 public:	
 	//Gives aim location
-	void AimAt(FVector AimLocation, float LaunchSpeed);
+	void AimAt(FVector AimLocation);
 
 	//Initialize barrel and turrent
 	UFUNCTION(BlueprintCallable, Category = "Setup")
@@ -55,6 +55,7 @@ private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 
-
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float LaunchSpeed = 5000;
 
 };
