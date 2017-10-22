@@ -35,7 +35,7 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 	if (!ensure(LeftTrack && RightTrack)) { return; }
 	
 	//If current velocity is greater than max, do not add more force
-	if ((Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent())->GetComponentVelocity().Size()) > Cast<ATank>(GetOwner())->MaxVelocity){return;}
+	if ((Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent())->GetComponentVelocity().Size()) > MaxVelocity){return;}
 	
 	//else continue acceleration
 	LeftTrack->SetThrottle(Throw);
@@ -47,7 +47,7 @@ void UTankMovementComponent::IntendRotate(float Throw)
 	if (!ensure(LeftTrack && RightTrack)) { return; }
 
 	//If current angular velocity is greater than max, do not acelerate rotation
-	if ((Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent())->GetPhysicsAngularVelocity().Size()) > Cast<ATank>(GetOwner())->MaxAngularVelocity) { return; }
+	if ((Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent())->GetPhysicsAngularVelocity().Size()) > MaxAngularVelocity) { return; }
 	//else, rontinue rotation acceleration
 	LeftTrack->SetThrottle(-Throw);
 	RightTrack->SetThrottle(Throw);

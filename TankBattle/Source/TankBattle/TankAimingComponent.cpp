@@ -3,6 +3,7 @@
 #include "TankBattle.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 #include "TankAimingComponent.h"
 
 
@@ -89,5 +90,24 @@ void UTankAimingComponent::AimAt(FVector AimLocation)
 		//Move the barrel and turret based on the calculated launch direction
 		MoveBarrel(LaunchDirection);
 		MoveTurret(LaunchDirection);
+	}
+}
+
+void UTankAimingComponent::Fire()
+{
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+
+	if (!ensure(Barrel) && ProjectileBlueprint) { return; }
+
+	if(isReloaded)
+	{
+		//spawn projectile actor
+		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("ProjectileStart")),
+			Barrel->GetSocketRotation(FName("ProjectileStart")));
+
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
 	}
 }

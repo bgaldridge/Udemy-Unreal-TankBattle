@@ -5,6 +5,9 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankTrack.generated.h"
 
+//Forward declarations
+class UTankMovementComponent;
+
 /**
  * StaticMesh that is used to set driving forces to tank
  */
@@ -18,5 +21,7 @@ public:
 	void SetThrottle(float RelativeThrottle);
 	//-1 is max reverse move and +1 is forward max speed
 	//void Move(float RelativeSpeed);
+
+	UTankMovementComponent *TankMovementComponent = nullptr;
 
 };
