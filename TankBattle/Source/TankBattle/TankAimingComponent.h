@@ -44,7 +44,7 @@ public:
 protected:
 	//Firing status enum
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-		EFiringStatus FiringStatus = EFiringStatus::Aiming;
+		EFiringStatus FiringStatus = EFiringStatus::Reloading;
 
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -59,6 +59,10 @@ private:
 	//The barrel and turret, which we will get from blueprint
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
+
+	FVector OutLaunchVelocity;
+
+	bool IsBarrelMoving();
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float LaunchSpeed = 5000;
