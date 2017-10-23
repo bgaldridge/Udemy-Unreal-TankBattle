@@ -34,7 +34,7 @@ void ATankPlayerController_BP::AimTowardsCrosshair()
 	FHitResult OutHit;; //Out parameter for hit location
 
 	//Get world location of crosshair through line trace and move cannon
-	if (ensure(GetSightRayHitLocation(OutHit)))
+	if (GetSightRayHitLocation(OutHit))
 	{
 		AimingComponent->AimAt(OutHit.Location);//Tank aims at specified location
 	}
@@ -59,12 +59,12 @@ bool ATankPlayerController_BP::GetSightRayHitLocation(FHitResult &OutHit) const
 		OutCameraWorldDirection)))//returns unit vector of direction the camera is facing
 	{
 		//Line-trace along look direction and see what we hit up to max range		
-		if (ensure(GetWorld()->LineTraceSingleByChannel(OutHit,
+		if (GetWorld()->LineTraceSingleByChannel(OutHit,
 			OutCameraWorldLocation,
 			OutCameraWorldLocation + OutCameraWorldDirection*CannonRange,
 			ECC_Visibility,
 			FCollisionQueryParams(FName(TEXT("")), false, GetOwner()),
-			FCollisionResponseParams())))
+			FCollisionResponseParams()))
 		{
 			return true; //if hit result is successfull
 		}

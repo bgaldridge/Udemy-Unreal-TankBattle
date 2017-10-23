@@ -33,7 +33,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	{
 		FiringStatus = EFiringStatus::Reloading;
 	}
-	else if (IsBarrelMoving())
+	else if (!IsBarrelMoving())
 	{
 		FiringStatus = EFiringStatus::Aiming;
 	}
@@ -45,9 +45,16 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 bool UTankAimingComponent::IsBarrelMoving()
 {
-	if (!ensure(Barrel)) { return false; }
-	FVector BarrelDirection = Barrel->GetForwardVector().GetSafeNormal();
-	return OutLaunchVelocity.GetSafeNormal().Equals(BarrelDirection, 0.01);
+	bool ReturnValue = FMath::IsNearlyEqual(OutLaunchVelocity.Rotation().Yaw, Turret->GetForwardVector().Rotation().Yaw, 0.1f);
+	if (ReturnValue)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Return value is TRUE"))
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Return value is FALSE"))
+	}
+	return ReturnValue;
 }
 
 void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
