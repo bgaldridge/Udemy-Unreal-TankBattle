@@ -28,6 +28,7 @@ void ATankPlayerController_BP::Tick(float DeltaTime)
 //Move turret/cannon towards point player is aiming at
 void ATankPlayerController_BP::AimTowardsCrosshair()
 {
+	if (!GetPawn()) { return; }// if not possessing (would crash if not playing and try and open PlayerController blueprint
 	AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 	

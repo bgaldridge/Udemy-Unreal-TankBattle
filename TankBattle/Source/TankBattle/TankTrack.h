@@ -24,4 +24,8 @@ public:
 
 	UTankMovementComponent *TankMovementComponent = nullptr;
 
+private:
+	UTankTrack();
+
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 };

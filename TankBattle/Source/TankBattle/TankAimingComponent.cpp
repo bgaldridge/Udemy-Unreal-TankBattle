@@ -45,16 +45,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 bool UTankAimingComponent::IsBarrelMoving()
 {
-	bool ReturnValue = FMath::IsNearlyEqual(OutLaunchVelocity.Rotation().Yaw, Turret->GetForwardVector().Rotation().Yaw, 0.1f);
-	if (ReturnValue)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Return value is TRUE"))
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Return value is FALSE"))
-	}
-	return ReturnValue;
+	return FMath::IsNearlyEqual(OutLaunchVelocity.Rotation().Yaw, Turret->GetForwardVector().Rotation().Yaw, 0.1f);
 }
 
 void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
