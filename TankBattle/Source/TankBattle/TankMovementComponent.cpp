@@ -33,11 +33,8 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
 	if (!ensure(LeftTrack && RightTrack)) { return; }
-	
-	//If current velocity is greater than max, do not add more force
-	if ((Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent())->GetComponentVelocity().Size()) > MaxVelocity){return;}
-	
-	//else continue acceleration
+	UE_LOG(LogTemp, Warning, TEXT("Forward throttle called with throw %f"), Throw)
+	//TODO: Check if limitation on speed and/or roation is still needed
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
 }
@@ -45,10 +42,8 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 void UTankMovementComponent::IntendRotate(float Throw)
 {
 	if (!ensure(LeftTrack && RightTrack)) { return; }
-
-	//If current angular velocity is greater than max, do not acelerate rotation
-	if ((Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent())->GetPhysicsAngularVelocity().Size()) > MaxAngularVelocity) { return; }
-	//else, rontinue rotation acceleration
+	UE_LOG(LogTemp,Warning,TEXT("Rotate throttle called with throw %f"), Throw)
+	//Note: Angular Dampening is applied!
 	LeftTrack->SetThrottle(-Throw);
 	RightTrack->SetThrottle(Throw);
 }
