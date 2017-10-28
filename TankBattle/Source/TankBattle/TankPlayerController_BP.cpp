@@ -35,6 +35,7 @@ void ATankPlayerController_BP::AimTowardsCrosshair()
 	FHitResult OutHit;; //Out parameter for hit location
 
 	//Get world location of crosshair through line trace and move cannon
+
 	if (GetSightRayHitLocation(OutHit))
 	{
 		AimingComponent->AimAt(OutHit.Location);//Tank aims at specified location

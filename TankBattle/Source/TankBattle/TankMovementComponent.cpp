@@ -28,12 +28,13 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 
 	//TODO fix friction issue(s)
 
+	//TODO fix bumps when driving
+
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
 	if (!ensure(LeftTrack && RightTrack)) { return; }
-	UE_LOG(LogTemp, Warning, TEXT("Forward throttle called with throw %f"), Throw)
 	//TODO: Check if limitation on speed and/or roation is still needed
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
@@ -42,7 +43,6 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 void UTankMovementComponent::IntendRotate(float Throw)
 {
 	if (!ensure(LeftTrack && RightTrack)) { return; }
-	UE_LOG(LogTemp,Warning,TEXT("Rotate throttle called with throw %f"), Throw)
 	//Note: Angular Dampening is applied!
 	LeftTrack->SetThrottle(-Throw);
 	RightTrack->SetThrottle(Throw);

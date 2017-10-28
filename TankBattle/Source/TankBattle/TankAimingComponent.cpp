@@ -12,9 +12,8 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
-	PrimaryComponentTick.bStartWithTickEnabled = true;
+
 }
 
 void UTankAimingComponent::BeginPlay()
@@ -66,27 +65,28 @@ void UTankAimingComponent::MoveBarrel(FVector LaunchDirection)
 
 }
 
+//***************************************************
+//Move the turrent based on the direction the aiming retical is looking at and the current direction the barrel is facing
+//***************************************************
 void UTankAimingComponent::MoveTurret(FVector LaunchDirection)
 {
 	//Note: ptr protection in AimAt
-	//Get current barrel coordinates
-	FRotator TurretRotation = Turret->GetForwardVector().Rotation();
-	FRotator LaunchRotation = LaunchDirection.Rotation();
-	float DeltaRotator;
+	//Get delta of rotation needed
+	float DeltaRotator = LaunchDirection.Rotation().Yaw - Turret->GetForwardVector().Rotation().Yaw;
+
 	//Pick DeltaRotator so that rotation is always in closest and correct direction
-	if ((TurretRotation.Yaw < 0) && (LaunchRotation.Yaw > 0)) //TODO Fix so that it works in all directions
+	if (DeltaRotator > 180)
 	{
-		DeltaRotator = TurretRotation.Yaw - LaunchRotation.Yaw;
+		DeltaRotator = -DeltaRotator;
 	}
-	else
-	{
-		DeltaRotator = LaunchRotation.Yaw - TurretRotation.Yaw;
-	}
-	 
+	 //UE_LOG(LogTemp, Warning, TEXT("Delta Rotator on Tank %s = %f"),*Turret->GetOwner()->GetName(), DeltaRotator)
+	//TODO: Fix rotation issue about x-axis (becomes -360)
 	Turret->Rotate(DeltaRotator);
 
 }
 
+//***************************************************
+//Come up with 
 void UTankAimingComponent::AimAt(FVector AimLocation)
 {
 	if (!ensure(Barrel && Turret)) { return; }
@@ -129,3 +129,9 @@ void UTankAimingComponent::Fire()
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }
+
+EFiringStatus UTankAimingComponent::GetFiringStatus() const
+{
+	return FiringStatus;
+}
+
