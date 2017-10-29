@@ -79,7 +79,7 @@ void UTankAimingComponent::MoveTurret(FVector LaunchDirection)
 	float DeltaRotator = LaunchDirection.Rotation().Yaw - Turret->GetForwardVector().Rotation().Yaw;
 
 	//Pick DeltaRotator so that rotation is always in closest and correct direction
-	if (DeltaRotator > 180)
+	if (FMath::Abs(DeltaRotator) > 180)
 	{
 		DeltaRotator = -DeltaRotator;
 	}
