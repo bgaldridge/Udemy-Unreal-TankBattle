@@ -11,7 +11,8 @@ enum class EFiringStatus : uint8
 {
 	Reloading,
 	Aiming,
-	Loaded
+	Loaded,
+	OutOfAmmo
 };
 
 //Forward declaration
@@ -43,10 +44,19 @@ public:
 
 	EFiringStatus GetFiringStatus() const;
 
+	UFUNCTION(BLueprintCallable, Category = "Firing")
+	int GetAmmoCount() const;
+
 protected:
 	//Firing status enum
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 		EFiringStatus FiringStatus = EFiringStatus::Reloading;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		int StartingAmmo = 10;
+	
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+		int AmmoCounter = StartingAmmo;
 
 	// Called when the game starts
 	virtual void BeginPlay() override;
