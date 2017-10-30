@@ -45,7 +45,7 @@ public:
 	EFiringStatus GetFiringStatus() const;
 
 	UFUNCTION(BLueprintCallable, Category = "Firing")
-	int GetAmmoCount() const;
+	int32 GetAmmoCount() const;
 
 protected:
 	//Firing status enum
@@ -53,10 +53,10 @@ protected:
 		EFiringStatus FiringStatus = EFiringStatus::Reloading;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		int StartingAmmo = 10;
+		int32 StartingAmmo = 10;
 	
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-		int AmmoCounter = StartingAmmo;
+		int32 AmmoCounter = StartingAmmo;
 
 	// Called when the game starts
 	virtual void BeginPlay() override;

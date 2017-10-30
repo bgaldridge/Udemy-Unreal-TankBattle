@@ -32,7 +32,7 @@ private:
 	bool GetSightRayHitLocation(FHitResult& OutHit) const; //Find if the sights hit the landscape and if it does, give coordinates
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		int CannonRange = 1000000;
+		int32 CannonRange = 1000000;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float CrossHairXLocation = 0.5f;

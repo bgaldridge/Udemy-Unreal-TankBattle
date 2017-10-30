@@ -44,6 +44,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	{
 		FiringStatus = EFiringStatus::Loaded;
 	}
+
 }
 
 bool UTankAimingComponent::IsBarrelMoving()
@@ -140,7 +141,7 @@ EFiringStatus UTankAimingComponent::GetFiringStatus() const
 	return FiringStatus;
 }
 
-int UTankAimingComponent::GetAmmoCount() const
+int32 UTankAimingComponent::GetAmmoCount() const
 {
 	return AmmoCounter;
 }
