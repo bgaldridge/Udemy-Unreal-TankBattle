@@ -22,7 +22,7 @@ private:
 		float MaxDegreesPerSecond = 7;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		float MinBarrelAngleDegrees = -10;
+		float MinBarrelAngleDegrees = -20;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float MaxBarrelAngleDegrees = 20;

@@ -42,7 +42,7 @@ void UTankTrack::SetThrottle(float RelativeThrottle)
 void UTankTrack::DriveTrack()
 {
 	//Get root component
-	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
+	UStaticMeshComponent *TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 	//Add force to track, checking the max acceleration first
 
 	TankMovementComponent = GetOwner()->FindComponentByClass<UTankMovementComponent>();
