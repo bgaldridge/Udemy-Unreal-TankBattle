@@ -35,9 +35,19 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 		URadialForceComponent* ExplosionForce = nullptr;
 
+	
+
 private:
 	UFUNCTION()
 		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	
+	void DestroyProjectile();
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float ProjectileTimer = 3;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float ProjectileDamage = 20;
 
 public:	
 	// Called every frame

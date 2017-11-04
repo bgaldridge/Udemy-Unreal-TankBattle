@@ -50,9 +50,32 @@ void AProjectile::LaunchProjectile(float Speed)
 	ProjectileMovementComponent->Activate(); //activate projectile
 }
 
+//***
+//Activated on hit
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
+	//
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
+
+	RootComponent = ImpactBlast;
+	CollisionMesh->DestroyComponent();
+
+	//Damage tank (if tank is within damage area, AActor::TakeDamage will be automatically called on other actor)
+	UGameplayStatics::ApplyRadialDamage(this, 
+		ProjectileDamage, 
+		GetActorLocation(), 
+		ExplosionForce->Radius, 
+		UDamageType::StaticClass(), 
+		TArray<AActor*>());//Empty array (hit all actors)
+
+	//Destroy projectile
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AProjectile::DestroyProjectile, ProjectileTimer);//5 second timer that trigger DestroyProjectile
+}
+
+void AProjectile::DestroyProjectile()
+{
+	this->Destroy();
 }

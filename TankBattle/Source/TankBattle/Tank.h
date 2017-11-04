@@ -14,6 +14,9 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
+	//Returns current health as a decimal percentage of starting health
+	UFUNCTION(BlueprintPure, Category = "Status")
+		float GetHealthPercentage() const;
 
 protected:
 	// Called when the game starts
@@ -21,6 +24,12 @@ protected:
 
 private:	
 	
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float StartingHealth = 100.f;
+
+	UPROPERTY(VisibleAnywhere, Category = "Status")
+		float TankHealth = StartingHealth;
 
 };
