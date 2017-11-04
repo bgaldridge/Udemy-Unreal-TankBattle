@@ -5,6 +5,9 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+//Declare our delegate type
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+
 UCLASS()
 class TANKBATTLE_API ATank : public APawn
 {
@@ -17,6 +20,8 @@ public:
 	//Returns current health as a decimal percentage of starting health
 	UFUNCTION(BlueprintPure, Category = "Status")
 		float GetHealthPercentage() const;
+
+	FTankDelegate OnDeath; //Create our delegate object which can be called in .cpp file
 
 protected:
 	// Called when the game starts

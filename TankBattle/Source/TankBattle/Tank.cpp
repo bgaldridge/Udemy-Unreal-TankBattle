@@ -33,10 +33,8 @@ float ATank::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AC
 
 	if (TankHealth <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("PLAYER DESTROYED!"))
+		OnDeath.Broadcast(); //Broadcast the event to all listeners when tank (AI or player) is dead
 	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Damage applied"))
 
 	return DamageToApply;
 }

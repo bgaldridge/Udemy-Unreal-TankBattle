@@ -2,6 +2,7 @@
 
 #include "TankBattle.h"
 #include "TankAimingComponent.h"
+#include "Tank.h"
 #include "TankAIController.h"
 //Depends on movement component via pathfinding
 void ATankAIController::BeginPlay()
@@ -9,6 +10,28 @@ void ATankAIController::BeginPlay()
 	Super::BeginPlay();
 	ControlledTank = GetPawn();
 	PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
+}
+
+//Called at beging play
+void ATankAIController::SetPawn(APawn *InPawn)
+{
+	Super::SetPawn(InPawn);
+
+	//If pawn is set
+	if (InPawn)
+	{
+		ATank* PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+
+		//Set this function to be called when OnDeath event is broadcast
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankAIController::OnPossedTankDeath);
+	}
+}
+
+//function to be called OnDeath broadcast
+void ATankAIController::OnPossedTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Received"))
 }
 
 //Called every frame
