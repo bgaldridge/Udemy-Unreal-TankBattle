@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankBattle.h"
+#include "Tank.h"
 #include "TankAimingComponent.h"
 #include "TankPlayerController_BP.h"
 
@@ -15,6 +16,27 @@ void ATankPlayerController_BP::BeginPlay()
 		FoundAimingComponent(AimingComponent);
 	}
 	
+}
+
+//Called at beging play when tank is possessed
+void ATankPlayerController_BP::SetPawn(APawn *InPawn)
+{
+	Super::SetPawn(InPawn);
+
+	//If pawn is set
+	if (InPawn)
+	{
+		ATank* PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+
+		//Set this function to be called when OnDeath event is broadcast
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController_BP::OnPossessedTankDeath);
+	}
+}
+
+void ATankPlayerController_BP::OnPossessedTankDeath()
+{
+	StartSpectatingOnly();
 }
 
 void ATankPlayerController_BP::Tick(float DeltaTime)
@@ -64,7 +86,7 @@ bool ATankPlayerController_BP::GetSightRayHitLocation(FHitResult &OutHit) const
 		if (GetWorld()->LineTraceSingleByChannel(OutHit,
 			OutCameraWorldLocation,
 			OutCameraWorldLocation + OutCameraWorldDirection*CannonRange,
-			ECC_Visibility,
+			ECC_Camera, //Instead of ECC_Visibility, so that UI features cannot be hit
 			FCollisionQueryParams(FName(TEXT("")), false, GetOwner()),
 			FCollisionResponseParams()))
 		{

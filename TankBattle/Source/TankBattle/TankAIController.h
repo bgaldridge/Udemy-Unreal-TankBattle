@@ -7,7 +7,7 @@
 
 //Forward delcations
 class UTankAimingComponent;
-
+class ATank;
 
 /**
  * 
@@ -19,7 +19,8 @@ class TANKBATTLE_API ATankAIController : public AAIController
 	
 private:
 	APawn *ControlledTank;
-	APawn *PlayerTank;
+	ATank *PlayerTank;
+	bool PlayerTankDead = false;
 
 	virtual void SetPawn(APawn *InPawn) override; //Called when pawn is possesed
 
@@ -33,5 +34,8 @@ private:
 
 	UFUNCTION()
 		void OnPossedTankDeath(); //function to be called when delegate on Tank broadcasts death
+
+	UFUNCTION()
+		void OnPlayerTankDeath();//Called when delegate on player tank broadcasts death
 	
 };

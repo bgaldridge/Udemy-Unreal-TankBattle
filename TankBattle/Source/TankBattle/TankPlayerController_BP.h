@@ -31,6 +31,11 @@ private:
 
 	bool GetSightRayHitLocation(FHitResult& OutHit) const; //Find if the sights hit the landscape and if it does, give coordinates
 
+	virtual void SetPawn(APawn *InPawn) override; //Called when pawn is possesed
+
+	UFUNCTION()
+		void OnPossessedTankDeath();
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		int32 CannonRange = 1000000;
 

@@ -20,7 +20,7 @@ float ATank::GetHealthPercentage() const
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-
+	TankHealth = StartingHealth;
 }
 
 float ATank::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
